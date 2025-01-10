@@ -1,5 +1,6 @@
 package com.alexduzi.desafio.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,11 +13,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_atividade")
-public class Atividade {
+public class Atividade implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,8 +40,7 @@ public class Atividade {
 	@JoinColumn(name = "categoria_id")
 	private Categoria categoria;
 
-	@ManyToOne
-	@JoinColumn(name = "bloco_id")
+	@OneToMany(mappedBy = "atividade")
 	private List<Bloco> blocos = new ArrayList<>();
 
 	public Atividade() {
